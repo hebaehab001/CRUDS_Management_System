@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CRUDS System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poetsen+One&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="css/all.min.css" />
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/index.css" />
+  </head>
+
+  <body class="container py-4 d-flex flex-column gap-2 bg-body-secondary">
+    <h1 class="text-center text-teal mb-3">SIMPLE CRUDS SYSTEM</h1>
+
+    <!-- Form Section -->
+    <section
+      id="crud"
+      class="d-flex flex-column gap-2 card-shadow bg-light p-4 rounded"
+    >
+      <h2 class="text-center text-teal flex-grow-1">Adding Product</h2>
+
+      <!-- productName Input -->
+      <div class="form-floating">
+        <input
+          oninput="validateInput(this)"
+          type="text"
+          class="form-control bg-primary-subtle"
+          id="productName"
+          placeholder=""
+        />
+        <ul
+          class="inputAlert alert alert-danger rounded-bottom-4 px-4 p-2 my-1 fs-5 d-none text-secondary"
+        >
+          <li>
+            Must start with a capital letter followed by 2–8 lowercase letters.
+          </li>
+          <li>Must contain a space followed by 2–8 characters.</li>
+        </ul>
+        <label for="productName">Product Name </label>
+      </div>
+
+      <!-- productPrice & productCategory Input -->
+      <div class="d-flex flex-column flex-sm-row gap-2">
+        <!-- productPrice Input -->
+        <div class="form-floating flex-grow-1">
+          <input
+            oninput="validateInput(this)"
+            type="number"
+            class="form-control bg-primary-subtle"
+            id="productPrice"
+            placeholder=""
+          />
+          <ul
+            class="inputAlert alert alert-danger rounded-bottom-4 px-4 p-2 my-1 fs-5 d-none text-secondary"
+          >
+            <li>Enter a valid positive price (e.g., 50 or 99.99).</li>
+            <li>Cannot start with zero or be negative.</li>
+          </ul>
+          <label for="productPrice">Product Price </label>
+        </div>
+
+        <!-- productCategory Input -->
+        <div class="form-floating flex-grow-1">
+          <input
+            onchange="validateInput(this)"
+            list="category"
+            type="text"
+            class="form-control bg-primary-subtle"
+            id="productCategory"
+            placeholder=""
+          />
+          <ul
+            class="inputAlert alert alert-danger rounded-bottom-4 px-4 p-2 my-1 fs-5 d-none text-secondary"
+          >
+            <li>Must be one of: TV, Mobile, Screens, or Electronic.</li>
+          </ul>
+          <label for="productCategory">Product Category </label>
+          <datalist id="category">
+            <option value="TV" />
+            <option value="Mobile" />
+            <option value="Screens" />
+            <option value="Electronic" />
+          </datalist>
+        </div>
+      </div>
+
+      <!-- productDescription Input -->
+      <div class="form-floating">
+        <textarea
+          oninput="validateInput(this)"
+          style="height: 100px"
+          class="form-control bg-primary-subtle"
+          id="productDescription"
+          placeholder=""
+        ></textarea>
+        <ul
+          class="inputAlert alert alert-danger rounded-bottom-4 px-4 p-2 my-1 fs-5 d-none text-secondary"
+        >
+          <li>
+            Description cannot be empty and must be under 1000 characters.
+          </li>
+        </ul>
+        <label for="productDescription">Product Description </label>
+      </div>
+
+      <!-- productImage Input -->
+      <div class="form-floating">
+        <input
+          onchange="validateInput(this)"
+          type="file"
+          class="form-control bg-primary-subtle py-5 px-4"
+          id="productImage"
+          placeholder=""
+        />
+        <ul
+          class="inputAlert alert alert-danger rounded-bottom-4 px-4 p-2 my-1 fs-5 d-none text-secondary"
+        >
+          <li>
+            Must select a file with an extension: jpg, jpeg, png, webp, or svg.
+          </li>
+          <li>
+            File name should not exceed 10 characters before the extension.
+          </li>
+          <li />
+        </ul>
+        <label for="productImage">Product Image </label>
+      </div>
+
+      <!-- Form Action Buttons -->
+      <div class="d-flex gap-2">
+        <!-- Add Product Button -->
+        <button
+          onclick="addProduct()"
+          id="btnAdd"
+          class="btn btn-outline-teal flex-grow-1"
+        >
+          <i class="fa-solid fa-plus"></i> Add Product
+        </button>
+
+        <!-- Update Product Button -->
+        <button
+          onclick="updateProduct()"
+          id="btnupdate"
+          class="btn btn-warning flex-grow-1 d-none"
+        >
+          update Product
+        </button>
+
+        <!-- Clear Form Inputs -->
+        <button
+          onclick="clearInput()"
+          id="btnClearForm"
+          class="btn btn-outline-teal"
+        >
+          Clear Form
+        </button>
+      </div>
+    </section>
+
+    <!-- Display Products Section -->
+    <section
+      id="crud-display"
+      class="card-shadow d-flex flex-column gap-2 bg-light p-4 rounded"
+    >
+      <h2 class="text-center text-teal">Display Products</h2>
+
+      <!-- Display Section Actions -->
+      <div class="d-flex flex-column flex-sm-row gap-2">
+        <!-- Search Input -->
+        <input
+          oninput="searchProducts(this.value)"
+          type="text"
+          class="form-control mx-auto bg-white border border-1 border-teal"
+          id="searchInput"
+          placeholder="Search by product name ..."
+        />
+
+        <!-- Delete All Products Button -->
+        <button
+          onclick="deleteAllProduct()"
+          id="btnDeleteAllProducts"
+          class="btn btn-outline-danger flex-shrink-0"
+        >
+          Delete All Products
+        </button>
+      </div>
+
+      <!-- Display Products -->
+      <div class="container border-teal p-3">
+        <div
+          id="productDisplayRow"
+          class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3"
+        >
+          <div class="col col-sm-12 col-md-12 col-lg-12">
+            <p class="text-center m-0 text-teal">No Products Found</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script src="js/index.js"></script>
+  </body>
+</html>

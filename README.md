@@ -8,7 +8,7 @@ This project helps users manage a product list by adding new items, searching, u
 
 This is a frontend-only project intended to run locally in the browser.
 
-![Project Preview](https://via.placeholder.com/1200x600?text=CRUDS+System+Preview)
+[![Project Preview](./images/preview.jpg)](https://cruds-management-system.vercel.app/)
 
 ## Features
 
